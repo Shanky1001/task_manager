@@ -15,17 +15,11 @@ const TaskItem = ({
   onDelete,
   onComplete,
 }: TaskItemPropsType) => {
-  
   return (
     <div
-      style={{
-        backgroundColor: `${
-          PriorityColor[task.priority as keyof typeof PriorityColor]
-        }`,
-      }}
-      className={`w-full flex justify-between items-center p-2 rounded mb-2 shadow `}
+      className={`w-full flex justify-between items-center p-2 rounded mb-2 border border-gray-300 shadow-md`}
     >
-      <div className="flex-1 flex justify-between items-center pr-4">
+      <div className="flex-1 flex justify-between items-center pr-4 gap-5">
         <div className="flex items-center gap-3">
           <input
             type="checkbox"
@@ -35,24 +29,27 @@ const TaskItem = ({
           />
           <span
             style={{ textDecoration: task.completed ? "line-through" : "none" }}
-            className={`text-md capitalize`}
+            className={`text-md capitalize break-all text-wrap`}
           >
             {task.name}
           </span>
         </div>
-        <span className={`text-md capitalize`}>{`(${task.priority})`}</span>
+        <span
+          style={{
+            backgroundColor: `${
+              PriorityColor[task.priority as keyof typeof PriorityColor]
+            }`,
+          }}
+          className={`text-sm px-4 py-2 rounded-full`}
+        >
+          {task.priority}
+        </span>
       </div>
       <div>
-        <button
-          onClick={() => onEdit(task.id)}
-          className="btn-icon"
-        >
+        <button onClick={() => onEdit(task.id)} className="btn-icon">
           <MdEdit />
         </button>
-        <button
-          onClick={() => onDelete(task.id)}
-          className="btn-icon"
-        >
+        <button onClick={() => onDelete(task.id)} className="btn-icon">
           <MdDelete />
         </button>
       </div>

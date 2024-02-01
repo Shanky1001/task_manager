@@ -12,7 +12,7 @@ const TaskList = () => {
 
   // Function to filter and Provide tasks
   const Tasks = useMemo(() => {
-    return filter ? [...TaskState].filter((task) => task.priority === filter) : TaskState;
+    return filter ? TaskState.filter((task) => task.priority === filter) : TaskState;
   }, [filter, TaskState]);
 
   // Function to handle edit
@@ -74,7 +74,7 @@ const TaskList = () => {
       <div className="flex flex-col justify-between">
         {/* Incomplete Tasks */}
         <div className="w-full py-4">
-          <h2 className="font-bold text-lg mb-4">Incomplete Tasks</h2>
+          <h2 className="font-bold text-lg mb-4">Incomplete Tasks -</h2>
           {Tasks.filter((task) => !task.completed).map((task) => (
             <TaskItem
               key={task.id}
@@ -84,11 +84,12 @@ const TaskList = () => {
               onComplete={handleComplete}
             />
           ))}
+          {Tasks.filter((task) => !task.completed).length === 0 && <h2 className="font-semibold text-center text-md"> No Incomplete Tasks</h2>}
         </div>
 
         {/* Completed Tasks */}
         <div className="w-full py-4">
-          <h2 className="font-bold text-lg mb-4">Completed Tasks</h2>
+          <h2 className="font-bold text-lg mb-4">Completed Tasks -</h2>
           {Tasks.filter((task) => task.completed).map((task) => (
             <TaskItem
               key={task.id}
@@ -98,6 +99,7 @@ const TaskList = () => {
               onComplete={handleComplete}
             />
           ))}
+          {Tasks.filter((task) => task.completed).length === 0 && <h2 className="font-semibold text-center text-md"> No Completed Tasks</h2>}
         </div>
       </div>
     </div>
