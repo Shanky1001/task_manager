@@ -53,10 +53,6 @@ export const TaskSlice = createSlice({
             }
           : task
       );
-      // const index = state.tasks.findIndex(
-      //   (task: taskType) => task.id === action.payload.id
-      // );
-      // state.tasks.splice(index, 1, action.payload);
     },
     changeStatus: (state, action) => {
       state.tasks = [...state.tasks].map((task: taskType) =>

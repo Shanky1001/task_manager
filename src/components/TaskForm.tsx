@@ -64,7 +64,7 @@ const TaskForm = () => {
           }
           placeholder="Enter task name"
           required
-          className="w-full md:flex-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-black"
+          className="w-full md:flex-1 px-4 py-2 border rounded-md focus-view"
         />
         <select
           id="priority"
@@ -73,7 +73,7 @@ const TaskForm = () => {
             setPriority(e.target.value)
           }
           required
-          className="px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-black"
+          className="px-4 py-2 border rounded-md focus-view"
         >
           <option value="" disabled>
             Select priority
@@ -86,7 +86,7 @@ const TaskForm = () => {
         </select>
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 focus:bg-blue-700 text-white font-semibold rounded-lg px-4 py-2"
+          className="btn-primary"
         >
           {editTaskId ? "Update Task" :"Add Task"}
         </button>

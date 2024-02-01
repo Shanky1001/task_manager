@@ -45,13 +45,13 @@ const TaskItem = ({
       <div>
         <button
           onClick={() => onEdit(task.id)}
-          className="p-1 mx-1 border border-black rounded text-lg text-black hover:text-gray-800"
+          className="btn-icon"
         >
           <MdEdit />
         </button>
         <button
           onClick={() => onDelete(task.id)}
-          className="p-1 mx-1 border text-lg border-black rounded text-black hover:text-gray-800"
+          className="btn-icon"
         >
           <MdDelete />
         </button>

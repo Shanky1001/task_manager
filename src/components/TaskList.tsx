@@ -15,13 +15,12 @@ const TaskList = () => {
     return filter ? [...TaskState].filter((task) => task.priority === filter) : TaskState;
   }, [filter, TaskState]);
 
-  // Function to handle edit - placeholder
+  // Function to handle edit
   const handleEdit = (id: number) => {
-    // console.log("Editing", id);
     dispatch(setEditTaskId(id))
   };
 
-  // Function to handle delete - placeholder
+  // Function to handle delete
   const handleDelete = (id: number) => {
     dispatch(deleteTask(id));
   };
@@ -42,7 +41,7 @@ const TaskList = () => {
                 <div className="flex items-center justify-center gap-1">
                   <span
                     style={{ backgroundColor: `${value}` }}
-                    className="inline-block w-4 h-4"
+                    className="inline-block w-4 h-4 rounded"
                   ></span>
                   <span className="capitalize">{key}</span>
                 </div>
