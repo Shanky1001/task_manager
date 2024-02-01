@@ -50,3 +50,7 @@
     2.  There is a filter also, with help of which task can be filtered on view.
 
 - User can modify the priority of any task by editing it. when editing the task, the values get populated in the form fields where user can change and values and update the task.
+
+
+![priority based task manager](https://github.com/Shanky1001/task_manager/assets/108118506/b6be3a6b-816d-4570-aba8-a382cca53ef4)
+
