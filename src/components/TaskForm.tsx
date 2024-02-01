@@ -1,35 +1,59 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { TaskPriorities } from "../constants";
-import { addTask, taskType } from "../redux/slice/TaskSlice";
+import {
+  addTask,
+  setEditTaskId,
+  taskType,
+  updateTask,
+} from "../redux/slice/TaskSlice";
 import { priorityType } from "../types";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 const TaskForm = () => {
   const [task, setTask] = useState("");
   const [priority, setPriority] = useState<keyof priorityType | string>("");
-
   const dispatch = useDispatch();
+  const { editTaskId, tasks } = useSelector(
+    (state: RootState) => state.taskState
+  );
 
+  // Action function on Form Submit
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const taskPayload: taskType = {
-      id: new Date().getTime(),
-      name: task,
-      priority,
-      completed: false,
-    };
-    dispatch(addTask(taskPayload));
+    if (editTaskId) {
+      // modify available task
+      dispatch(updateTask({ name: task, priority: priority }));
+      dispatch(setEditTaskId(null));
+    } else {
+      // add new task
+      const taskPayload: taskType = {
+        id: new Date().getTime(),
+        name: task,
+        priority,
+        completed: false,
+      };
+      dispatch(addTask(taskPayload));
+    }
 
     // Reset form
     setTask("");
     setPriority("");
   };
 
+  useEffect(() => {
+    if (editTaskId) {
+      const data = tasks.filter((task) => task.id === editTaskId);
+      setTask(data[0].name);
+      setPriority(data[0].priority);
+    }
+  }, [editTaskId, tasks]);
+
   return (
     <div className="container mx-auto shadow-md bg-white rounded-lg p-5">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col md:flex-row items-center justify-between gap-4"
+        className="flex flex-col items-start md:flex-row md:items-center justify-between gap-4"
       >
         <input
           type="text"
@@ -40,7 +64,7 @@ const TaskForm = () => {
           }
           placeholder="Enter task name"
           required
-          className="flex-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="w-full md:flex-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-black"
         />
         <select
           id="priority"
@@ -49,7 +73,7 @@ const TaskForm = () => {
             setPriority(e.target.value)
           }
           required
-          className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-black"
         >
           <option value="" disabled>
             Select priority
@@ -64,7 +88,7 @@ const TaskForm = () => {
           type="submit"
           className="bg-blue-500 hover:bg-blue-700 focus:bg-blue-700 text-white font-semibold rounded-lg px-4 py-2"
         >
-          Add Task
+          {editTaskId ? "Update Task" :"Add Task"}
         </button>
       </form>
     </div>

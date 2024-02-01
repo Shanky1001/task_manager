@@ -10,23 +10,25 @@ export interface taskType {
 
 interface initialStateType {
   tasks: taskType[];
+  editTaskId: number | null;
 }
 
 const initialState: initialStateType = {
   tasks: [
     {
-      id: new Date().getTime(),
+      id: 1,
       name: "edit functionality",
       priority: "high",
       completed: false,
     },
     {
-      id: new Date().getTime(),
+      id: 2,
       name: "Completed functionality",
       priority: "medium",
       completed: true,
     },
   ],
+  editTaskId: null,
 };
 
 export const TaskSlice = createSlice({
@@ -37,23 +39,38 @@ export const TaskSlice = createSlice({
       state.tasks.push(action.payload);
     },
     deleteTask: (state, action) => {
-      state.tasks = state.tasks.filter((task: taskType) => task.id !== action.payload);
+      state.tasks = state.tasks.filter(
+        (task: taskType) => task.id !== action.payload
+      );
     },
     updateTask: (state, action) => {
-      const index = state.tasks.findIndex(
-        (task: taskType) => task.id === action.payload.id
+      state.tasks = state.tasks.map((task: taskType) =>
+        task.id === state.editTaskId
+          ? {
+              ...task,
+              name: action.payload.name,
+              priority: action.payload.priority,
+            }
+          : task
       );
-      state.tasks.splice(index, 1, action.payload);
+      // const index = state.tasks.findIndex(
+      //   (task: taskType) => task.id === action.payload.id
+      // );
+      // state.tasks.splice(index, 1, action.payload);
     },
     changeStatus: (state, action) => {
-      state.tasks = state.tasks.map((task: taskType) =>
+      state.tasks = [...state.tasks].map((task: taskType) =>
         task.id === action.payload
           ? { ...task, completed: !task.completed }
           : task
       );
     },
+    setEditTaskId: (state, action) => {
+      state.editTaskId = action.payload;
+    },
   },
 });
 
-export const { addTask, deleteTask, updateTask,changeStatus } = TaskSlice.actions;
+export const { addTask, deleteTask, updateTask, changeStatus, setEditTaskId } =
+  TaskSlice.actions;
 export default TaskSlice.reducer;
